@@ -1,0 +1,3 @@
+[submodule "2th_NtrexAHRS_lib_ROS"]
+	path = 2th_NtrexAHRS_lib_ROS
+	url = https://github.com/tlswotj/2th_NtrexAHRS_lib_ROS.git
