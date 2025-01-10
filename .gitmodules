@@ -6,3 +6,7 @@
 	path = rf
 	url = https://github.com/tlswotj/ibus_rf_ros2.git
 	branch = main
+[submodule "slam"]
+	path = slam
+	url = https://github.com/rcv-formula/SLAM.git
+	branch = main
