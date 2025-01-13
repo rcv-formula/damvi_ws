@@ -10,3 +10,7 @@
 	path = slam
 	url = https://github.com/rcv-formula/SLAM.git
 	branch = main
+[submodule "mpc"]
+	path = mpc
+	url = https://github.com/rcv-formula/mpc_controller_for_damvi.git
+	branch = main
