@@ -14,3 +14,7 @@
 	path = mpc
 	url = https://github.com/rcv-formula/mpc_controller_for_damvi.git
 	branch = main
+[submodule "f1tenth_system"]
+	path = f1tenth_system
+	url = https://github.com/rcv-formula/f1_stack_for_damvi.git
+	branch = main
