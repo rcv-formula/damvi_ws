@@ -2,7 +2,14 @@ from setuptools import setup
 import os
 from glob import glob
 
+
+
 package_name = 'damvi'
+
+
+print(f"Current working directory: {os.getcwd()}")
+print(f"Package directory contents: {os.listdir(os.getcwd())}")
+print(f"Contents of 'damvi': {os.listdir('damvi') if os.path.exists('damvi') else 'Directory not found'}")
 
 setup(
     name=package_name,
