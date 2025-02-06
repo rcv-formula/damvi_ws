@@ -7,6 +7,7 @@ from launch.actions import IncludeLaunchDescription
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 import os
+import time
 
 def generate_launch_description():
 
@@ -49,6 +50,15 @@ def generate_launch_description():
         description='Descriptions for ackermann mux configs')
 
     ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la])
+    
+    imu_node = Node(
+        package='stella_ahrs',
+        executable='stella_ahrs_node',
+        name='stella_ahrs_node',
+        output='log',
+        emulate_tty=True,
+        namespace='/',
+    )
     
     rf_input_node = Node(
         package='rf_joy',
@@ -121,12 +131,15 @@ def generate_launch_description():
     )    
     
     # finalize
+    ld.add_action(imu_node)
+    time.sleep(1)
     ld.add_action(joy_node)
     ld.add_action(joy_teleop_node)
     ld.add_action(ackermann_to_vesc_node)
     ld.add_action(rf_input_node)
     ld.add_action(rf_joy_node)
     ld.add_action(vesc_driver_node)
+    
 
     ld.add_action(urg_node)
     ld.add_action(ackermann_mux_node)

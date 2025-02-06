@@ -3,12 +3,17 @@
   <name>damvi</name>
   <version>0.0.1</version>
   <description>Package that contains only launch files</description>
-  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <maintainer email="tlswotj4636@naver.com">JaeSeo Shin</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  
-  <!-- 런치 파일 사용을 위한 의존성 -->
+
+  <!-- 실행 시 필요한 의존(런치 파일만 있다면 필수는 아니지만 권장) -->
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
+
+  <!-- ROS2 ament_cmake임을 명시적으로 선언 -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
