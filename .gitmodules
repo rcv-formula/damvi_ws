@@ -6,14 +6,6 @@
 	path = rf
 	url = https://github.com/tlswotj/ibus_rf_ros2.git
 	branch = main
-[submodule "slam"]
-	path = slam
-	url = https://github.com/rcv-formula/SLAM.git
-	branch = main
-[submodule "mpc"]
-	path = mpc
-	url = https://github.com/rcv-formula/mpc_controller_for_damvi.git
-	branch = main
 [submodule "f1tenth_system"]
 	path = f1tenth_system
 	url = https://github.com/rcv-formula/f1_stack_for_damvi.git
