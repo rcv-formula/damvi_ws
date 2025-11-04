@@ -129,6 +129,12 @@ def generate_launch_description():
         name='drive_publisher',
         parameters=[LaunchConfiguration('mux_config')]
     )    
+    vesc_to_odom_node = Node(
+        package='vesc_ackermann',
+        executable='vesc_to_odom_node',
+        name='vesc_to_odom_node',
+        parameters=[LaunchConfiguration('vesc_config')]
+    )
     
     # finalize
     ld.add_action(imu_node)
@@ -139,6 +145,7 @@ def generate_launch_description():
     ld.add_action(rf_input_node)
     ld.add_action(rf_joy_node)
     ld.add_action(vesc_driver_node)
+    ld.add_action(vesc_to_odom_node)
     
 
     ld.add_action(urg_node)
