@@ -31,6 +31,11 @@ def generate_launch_description():
         'config',
         'mux.yaml'
     )
+    imu_config = os.path.join(
+        get_package_share_directory('microstrain_inertial_driver'),
+        'config',
+        'empty.yaml'
+    )
 
     joy_la = DeclareLaunchArgument(
         'joy_config',
@@ -48,17 +53,30 @@ def generate_launch_description():
         'mux_config',
         default_value=mux_config,
         description='Descriptions for ackermann mux configs')
+    imu_la = DeclareLaunchArgument(
+        'imu_config',
+        default_value=imu_config,
+        description='Descriptions for imu configs')
 
-    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la])
+    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la, imu_la])
     
-    imu_node = Node(
-        package='stella_ahrs',
-        executable='stella_ahrs_node',
-        name='stella_ahrs_node',
-        output='log',
-        emulate_tty=True,
-        namespace='/',
-    )
+    # imu_node = Node(
+    #     package='stella_ahrs',
+    #     executable='stella_ahrs_node',
+    #     name='stella_ahrs_node',
+    #     output='log',
+    #     emulate_tty=True,
+    #     namespace='/',
+    # )
+    
+    # imu_node = Node(
+    #    package='microstrain_inertial_driver',
+    #    executable='microstrain_inertial_driver_node',
+    #    name='microstrain_inertial_driver_node',
+    #    parameters=[LaunchConfiguration('imu_config')],
+    #    output='log',
+    #    emulate_tty=True,
+    # )
     
     rf_input_node = Node(
         package='rf_joy',
@@ -137,7 +155,7 @@ def generate_launch_description():
     )
     
     # finalize
-    ld.add_action(imu_node)
+    # ld.add_action(imu_node)
     time.sleep(1)
     ld.add_action(joy_node)
     ld.add_action(joy_teleop_node)

@@ -1,0 +1,2 @@
+ros2 launch damvi bringup_launch.py
+ros2 launch microstrain_inertial_driver microstrain_launch.py
