@@ -9,7 +9,7 @@
 [submodule "f1tenth_system"]
 	path = f1tenth_system
 	url = https://github.com/rcv-formula/f1_stack_for_damvi.git
-	branch = main
+	branch = red_damvi
 [submodule "microstrain_imu"]
 	path = microstrain_imu
 	url = https://github.com/rcv-formula/microstrain_inertial.git
