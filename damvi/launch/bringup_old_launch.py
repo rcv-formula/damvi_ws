@@ -2,29 +2,12 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.substitutions import Command
 from launch.substitutions import LaunchConfiguration
-from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
+from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from lifecycle_msgs.msg import Transition
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 import os
-import yaml
 import time
-
-
-_PACKAGE_NAME = 'microstrain_inertial_driver'
-_DEFAULT_PARAMS_FILE = os.path.join(
-    get_package_share_directory(_PACKAGE_NAME),
-    'microstrain_inertial_driver_common',
-    'config',
-    'params.yml'
-)
-_EMPTY_PARAMS_FILE = os.path.join(
-    get_package_share_directory(_PACKAGE_NAME),
-    'config',
-    'empty.yml'
-)
-
 
 def generate_launch_description():
 
@@ -74,35 +57,8 @@ def generate_launch_description():
         'imu_config',
         default_value=imu_config,
         description='Descriptions for imu configs')
-    
-    imu_namespace_la = DeclareLaunchArgument('namespace',   default_value='/',                description='Namespace to use when launching the nodes in this launch file')
-    imu_node_name_la = DeclareLaunchArgument('node_name',   default_value=_PACKAGE_NAME,      description='Name to give the Microstrain Inertial Driver node')
-    imu_debug_la = DeclareLaunchArgument('debug',       default_value='false',            description='Whether or not to log debug information.')
-    imu_param_file_la = DeclareLaunchArgument('params_file', default_value=_EMPTY_PARAMS_FILE, description='Path to file that will load additional parameters')
 
-  # Pass an environment variable to the node to determine if it is in debug or not
-    imu_env_val_la = SetEnvironmentVariable('MICROSTRAIN_INERTIAL_DEBUG', value=LaunchConfiguration('debug'))
-    microstrain_node = Node(
-      package    = _PACKAGE_NAME,
-      executable = "microstrain_inertial_driver_node",
-      name       = LaunchConfiguration('node_name'),
-      namespace  = LaunchConfiguration('namespace'),
-      parameters = [
-      # Load the default params file manually, since this is a ROS params file, we will need to load the file manually
-        yaml.safe_load(open(_DEFAULT_PARAMS_FILE, 'r')),
-
-      # If you want to override any settings in the params.yml file, make a new yaml file, and set the value via the params_file arg
-        LaunchConfiguration('params_file'),
-
-      # Supported overrides
-        {
-            "debug" : LaunchConfiguration('debug')
-        },
-      ]
-    )
-
-    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la, imu_la, imu_namespace_la, imu_node_name_la, imu_debug_la, imu_param_file_la, imu_env_val_la, microstrain_node])
-    
+    ld = LaunchDescription([joy_la, vesc_la, sensors_la, mux_la, imu_la])
     
     # imu_node = Node(
     #     package='stella_ahrs',
@@ -111,6 +67,15 @@ def generate_launch_description():
     #     output='log',
     #     emulate_tty=True,
     #     namespace='/',
+    # )
+    
+    # imu_node = Node(
+    #    package='microstrain_inertial_driver',
+    #    executable='microstrain_inertial_driver_node',
+    #    name='microstrain_inertial_driver_node',
+    #    parameters=[LaunchConfiguration('imu_config')],
+    #    output='log',
+    #    emulate_tty=True,
     # )
     
     rf_input_node = Node(
@@ -188,7 +153,6 @@ def generate_launch_description():
         name='vesc_to_odom_node',
         parameters=[LaunchConfiguration('vesc_config')]
     )
-
     
     # finalize
     # ld.add_action(imu_node)
@@ -207,6 +171,5 @@ def generate_launch_description():
     ld.add_action(static_tf_node)
     ld.add_action(tf_publisher_node)
     ld.add_action(drive_publisher_node)
-
 
     return ld
